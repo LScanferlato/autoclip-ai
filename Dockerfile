@@ -26,7 +26,7 @@ RUN pip install --upgrade pip && pip install \
     opencv-python \
     pillow \
     psutil \
-    numpy
+    numpy<2
 
 # 🚪 Espone la porta Flask
 EXPOSE 5000
