@@ -1,10 +1,7 @@
-# ⚙️ Base image con Python e supporto per PyTorch + CUDA
 FROM pytorch/pytorch:2.1.0-cuda11.8-cudnn8-runtime
 
-# 📁 Imposta la directory di lavoro
 WORKDIR /app
 
-# 🧩 Installa dipendenze di sistema
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     libsm6 \
@@ -12,11 +9,11 @@ RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     && rm -rf /var/lib/apt/lists/*
 
-# 📜 Copia i file del progetto
 COPY . /app
 
-# 📦 Installa le dipendenze Python
+# ✅ Installazione corretta dei pacchetti Python
 RUN pip install --upgrade pip && pip install \
+    numpy<2 \
     flask \
     transformers \
     sentence-transformers \
@@ -25,12 +22,9 @@ RUN pip install --upgrade pip && pip install \
     torchaudio \
     opencv-python \
     pillow \
-    psutil \
-    numpy<2
+    psutil
 
-# 🚪 Espone la porta Flask
+# ✅ Espone la porta Flask correttamente
 EXPOSE 5000
 
-# ▶️ Comando di avvio
 CMD ["python3", "app.py"]
-
