@@ -7,24 +7,14 @@ RUN apt-get update && apt-get install -y \
     libsm6 \
     libxext6 \
     libgl1-mesa-glx \
+    python3-tk \
     && rm -rf /var/lib/apt/lists/*
 
 COPY . /app
 
-# ✅ Installazione corretta dei pacchetti Python
-RUN pip install --upgrade pip && pip install \
-    numpy<2 \
-    flask \
-    transformers \
-    sentence-transformers \
-    torch \
-    torchvision \
-    torchaudio \
-    opencv-python \
-    pillow \
-    psutil
+COPY requirements.txt .
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# ✅ Espone la porta Flask correttamente
 EXPOSE 5000
 
 CMD ["python3", "app.py"]
